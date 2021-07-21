@@ -1,0 +1,82 @@
+version: '3.3'
+
+x-common:
+  &common_default
+  WORKERS: ${WORKERS}
+
+x-database:
+  &database_default
+  MONGO_HOST: ${MONGO_HOST}
+  MONGO_PORT: ${MONGO_PORT}
+  MONGO_DB: ${MONGO_DB}
+  ES_HOST: ${ES_HOST}
+  ES_PORT: ${ES_PORT}
+  ES_INDEX: ${ES_INDEX}
+
+x-timedelta:
+  &timedelta_default
+  CRON_TIME: ${CRON_TIME}
+
+x-youtube:
+  &youtube_default
+  DEVELOPER_KEY: ${DEVELOPER_KEY}
+  YOUTUBE_API_SERVICE_NAME: ${YOUTUBE_API_SERVICE_NAME}
+  YOUTUBE_API_VERSION: ${YOUTUBE_API_VERSION}
+
+services:
+  mongo:
+    image: mongo:4.0
+    container_name: mongo
+    restart: unless-stopped
+    volumes:
+      - mongo:/data/db
+    ports:
+      - 27017:27017
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.4
+    container_name: elasticsearch
+    restart: unless-stopped
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - elastic:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.13.4
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+
+  search:
+    build: .
+    container_name: fampay_search
+    restart: unless-stopped
+    environment:
+      <<: *database_default
+      <<: *timedelta_default
+      <<: *youtube_default
+      <<: *common_default
+
+    ports:
+      - 8000:8000
+
+
+volumes:
+  mongo:
+  elastic:
