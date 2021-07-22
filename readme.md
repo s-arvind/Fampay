@@ -112,3 +112,40 @@ to sync records
 To run with docker-compose
 
     docker-compose up -d
+
+
+Example:
+
+`GET  http://localhost:8000/api/search?q=ntervie`
+Response:
+
+    {
+    "count": 1,
+    "data": [
+            {
+                "type": "video",
+                "publishedAt": "2021-07-21T19:50:54+00:00",
+                "channelId": "UC8CbFnDTYkiVweaz8y9wd_Q",
+                "title": "Paul Duncan Interview Star Wars Archives and George Lucas - Rule of Two",
+                "description": "Todays is another special day on Rule of Two where we get to speak with Paul Duncan. Paul Duncan is a film historian whose TASCHEN books include The ...",
+                "thumbnails": {
+                    "default": {
+                        "url": "https://i.ytimg.com/vi/eoBIha9zk28/default.jpg",
+                        "width": 120,
+                        "height": 90
+                    },
+                    "medium": {
+                        "url": "https://i.ytimg.com/vi/eoBIha9zk28/mqdefault.jpg",
+                        "width": 320,
+                        "height": 180
+                    },
+                    "high": {
+                        "url": "https://i.ytimg.com/vi/eoBIha9zk28/hqdefault.jpg",
+                        "width": 480,
+                        "height": 360
+                    }
+                },
+                "channelTitle": "Star Wars Theory"
+            }
+        ]
+    }
