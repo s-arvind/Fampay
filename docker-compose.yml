@@ -24,6 +24,7 @@ x-youtube:
   YOUTUBE_API_VERSION: ${YOUTUBE_API_VERSION}
 
 services:
+  # mongo container
   mongo:
     image: mongo:4.0
     container_name: mongo
@@ -32,6 +33,8 @@ services:
       - mongo:/data/db
     ports:
       - 27017:27017
+
+  # elasticsearch container
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.13.4
     container_name: elasticsearch
@@ -53,6 +56,7 @@ services:
     ports:
       - 9200:9200
 
+  # kibana container
   kibana:
     container_name: kibana
     image: docker.elastic.co/kibana/kibana:7.13.4
@@ -63,6 +67,7 @@ services:
     depends_on:
       - elasticsearch
 
+  # app container
   search:
     build: .
     container_name: fampay_search

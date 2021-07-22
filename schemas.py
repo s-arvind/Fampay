@@ -9,6 +9,7 @@ class Pagination(BaseModel):
     skip: int = Field(0)
 
 
+# api search query parameter , optional fields
 class SearchSchema(BaseModel):
     q: str = Field(None)
     publish_after: Optional[datetime] = Field(None)
@@ -16,6 +17,7 @@ class SearchSchema(BaseModel):
     channel: str = Field(None)
     
 
+# schema for one document
 class Item(BaseModel):
     _id: str
     type: str
@@ -26,9 +28,11 @@ class Item(BaseModel):
     thumbnails: Any
     channelTitle: str
 
+# search api response schema
 class SearchResponse(BaseModel):
     count: int = Field(0)
-    data: List[Item] = Field(list())
+    data: List[Item] = []
 
+# error schema
 class ErrorMessage(BaseModel):
     message: str

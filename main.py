@@ -4,6 +4,7 @@ from starlette.middleware.cors import CORSMiddleware
 from router import router
 import uvicorn
 
+# api redoc
 openapi_url = '/api/openapi.json'
 redoc_url = '/api/redoc'
 

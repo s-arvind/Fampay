@@ -1,5 +1,6 @@
 from decouple import config
 
+# env variables
 DEVELOPER_KEY = config('DEVELOPER_KEY')
 YOUTUBE_API_SERVICE_NAME = config('YOUTUBE_API_SERVICE_NAME', 'youtube')
 YOUTUBE_API_VERSION = config('YOUTUBE_API_VERSION', 'v3')
