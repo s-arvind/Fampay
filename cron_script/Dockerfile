@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y cron curl build-essential vim \
 && apt remove build-essential -y --purge && apt autoremove -y \
 && rm -rf /var/lib/apt/lists/*
 
-
+RUN . /root/.poetry/env
 RUN chmod +x /app/cron_script/run.sh /app/cron_script/entrypoint.sh
 
 ENTRYPOINT /app/cron_script/entrypoint.sh
