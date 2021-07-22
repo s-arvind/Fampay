@@ -107,7 +107,11 @@ run app server
 
 to sync records
 
-    poetry run python -m cron_script.sync_data
+    poetry run python -m sync_data.py
+
+to run cron:
+
+    1 * * * * poetry run python -m sync_data.py >> /var/log/cron.log 2>&1
 
 To run with docker-compose
 
